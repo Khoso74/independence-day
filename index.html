@@ -32,6 +32,51 @@
             min-height: 100vh;
             overflow-x: hidden;
             color: var(--white);
+            position: relative;
+        }
+
+        /* Waving Pakistani Flag Background */
+        .flag-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .flag-bg {
+            position: absolute;
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(to bottom, var(--primary-green) 50%, var(--white) 50%);
+            border-radius: 10px;
+            animation: flagWaveBg 6s ease-in-out infinite;
+        }
+
+        .flag-bg:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .flag-bg:nth-child(2) { top: 30%; right: 10%; animation-delay: 1s; }
+        .flag-bg:nth-child(3) { top: 60%; left: 15%; animation-delay: 2s; }
+        .flag-bg:nth-child(4) { top: 80%; right: 20%; animation-delay: 3s; }
+
+        @keyframes flagWaveBg {
+            0%, 100% { transform: rotateY(0deg) rotateX(0deg) scale(1); }
+            25% { transform: rotateY(15deg) rotateX(5deg) scale(1.1); }
+            50% { transform: rotateY(0deg) rotateX(10deg) scale(1); }
+            75% { transform: rotateY(-15deg) rotateX(5deg) scale(0.9); }
+        }
+
+        .flag-star-bg {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--white);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         }
 
         @keyframes gradientShift {
@@ -335,6 +380,49 @@
             border-color: #ff0000;
         }
 
+        /* Music Modal */
+        .music-container {
+            text-align: center;
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .music-item {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-item:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .music-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .music-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .music-desc {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
         /* Photo Booth */
         .photo-booth {
             text-align: center;
@@ -502,6 +590,14 @@
         <div class="loading-spinner"></div>
     </div>
 
+    <!-- Waving Pakistani Flag Background -->
+    <div class="flag-background">
+        <div class="flag-bg"><div class="flag-star-bg"></div></div>
+        <div class="flag-bg"><div class="flag-star-bg"></div></div>
+        <div class="flag-bg"><div class="flag-star-bg"></div></div>
+        <div class="flag-bg"><div class="flag-star-bg"></div></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="nav-bar">
         <div class="nav-logo">
@@ -560,7 +656,7 @@
             <div class="feature-card" onclick="openModal('music')">
                 <div class="feature-icon">🎵</div>
                 <div class="feature-title">Patriotic Music</div>
-                <div class="feature-desc">Listen to national anthem and patriotic songs</div>
+                <div class="feature-desc">Listen to Qaumi Tarana and patriotic songs</div>
             </div>
             
             <div class="feature-card" onclick="openModal('quiz')">
@@ -575,10 +671,10 @@
                 <div class="feature-desc">Take photos with patriotic filters</div>
             </div>
             
-            <div class="feature-card" onclick="openModal('achievements')">
+            <div class="feature-card" onclick="showAchievements()">
                 <div class="feature-icon">🏆</div>
                 <div class="feature-title">Achievements</div>
-                <div class="feature-desc">Unlock achievements and badges</div>
+                <div class="feature-desc">View your unlocked achievements</div>
             </div>
         </section>
     </div>
@@ -588,10 +684,16 @@
         <h3><i class="fas fa-music"></i> Patriotic Music</h3>
         <div class="music-controls">
             <button class="music-btn" onclick="playMusic('anthem')">
-                <i class="fas fa-play"></i> National Anthem
+                <i class="fas fa-play"></i> Qaumi Tarana
             </button>
-            <button class="music-btn" onclick="playMusic('patriotic')">
-                <i class="fas fa-play"></i> Patriotic Songs
+            <button class="music-btn" onclick="playMusic('patriotic1')">
+                <i class="fas fa-play"></i> Dil Dil Pakistan
+            </button>
+            <button class="music-btn" onclick="playMusic('patriotic2')">
+                <i class="fas fa-play"></i> Jeevay Pakistan
+            </button>
+            <button class="music-btn" onclick="playMusic('patriotic3')">
+                <i class="fas fa-play"></i> Pakistan Zindabad
             </button>
             <button class="music-btn" onclick="toggleMute()">
                 <i class="fas fa-volume-mute" id="muteIcon"></i>
@@ -607,6 +709,38 @@
                 <h2><i class="fas fa-question-circle"></i> Pakistan Knowledge Quiz</h2>
                 <div id="quizContent">
                     <!-- Quiz content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Modal -->
+    <div class="modal" id="musicModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('music')">&times;</button>
+            <div class="music-container">
+                <h2><i class="fas fa-music"></i> Patriotic Music Collection</h2>
+                <div class="music-grid">
+                    <div class="music-item" onclick="playMusic('anthem')">
+                        <div class="music-icon">🎵</div>
+                        <div class="music-title">Qaumi Tarana</div>
+                        <div class="music-desc">National Anthem of Pakistan</div>
+                    </div>
+                    <div class="music-item" onclick="playMusic('patriotic1')">
+                        <div class="music-icon">🎶</div>
+                        <div class="music-title">Dil Dil Pakistan</div>
+                        <div class="music-desc">Popular Patriotic Song</div>
+                    </div>
+                    <div class="music-item" onclick="playMusic('patriotic2')">
+                        <div class="music-icon">🎼</div>
+                        <div class="music-title">Jeevay Jeevay Pakistan</div>
+                        <div class="music-desc">Celebration Song</div>
+                    </div>
+                    <div class="music-item" onclick="playMusic('patriotic3')">
+                        <div class="music-icon">🎤</div>
+                        <div class="music-title">Pakistan Zindabad</div>
+                        <div class="music-desc">Patriotic Anthem</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -671,6 +805,31 @@
                 question: "What is the national animal of Pakistan?",
                 options: ["Snow Leopard", "Markhor", "Lion", "Tiger"],
                 correct: 1
+            },
+            {
+                question: "What is the national bird of Pakistan?",
+                options: ["Eagle", "Chakor", "Peacock", "Sparrow"],
+                correct: 1
+            },
+            {
+                question: "What is the national tree of Pakistan?",
+                options: ["Banyan", "Deodar", "Mango", "Oak"],
+                correct: 1
+            },
+            {
+                question: "What is the national language of Pakistan?",
+                options: ["English", "Arabic", "Urdu", "Punjabi"],
+                correct: 2
+            },
+            {
+                question: "Which mountain is the highest peak in Pakistan?",
+                options: ["K2", "Nanga Parbat", "Broad Peak", "Gasherbrum I"],
+                correct: 0
+            },
+            {
+                question: "What is the national motto of Pakistan?",
+                options: ["Unity, Faith, Discipline", "Peace, Progress, Prosperity", "Freedom, Justice, Equality", "Truth, Justice, Liberty"],
+                correct: 0
             }
         ];
 
@@ -689,8 +848,9 @@
         function updateCountdown() {
             const now = new Date();
             const currentYear = now.getFullYear();
-            const independenceDay = new Date(currentYear, 7, 14, 0, 0, 0);
+            const independenceDay = new Date(currentYear, 7, 14, 0, 0, 0); // August 14th
             
+            // If Independence Day has passed this year, set it to next year
             if (now > independenceDay) {
                 independenceDay.setFullYear(currentYear + 1);
             }
@@ -825,23 +985,35 @@
         }
 
         // Quiz System
+        let currentQuestionIndex = 0;
+        let quizScore = 0;
+
         function loadQuiz() {
             const quizContent = document.getElementById('quizContent');
-            const currentQuestion = quizData[0]; // For demo, always show first question
+            const currentQuestion = quizData[currentQuestionIndex];
             
             quizContent.innerHTML = `
+                <div class="quiz-question">Question ${currentQuestionIndex + 1} of ${quizData.length}</div>
                 <div class="quiz-question">${currentQuestion.question}</div>
                 <div class="quiz-options">
                     ${currentQuestion.options.map((option, index) => 
                         `<div class="quiz-option" onclick="checkAnswer(${index})">${option}</div>`
                     ).join('')}
                 </div>
+                <div style="margin-top: 2rem; font-size: 1.2rem;">
+                    Score: ${quizScore}/${quizData.length}
+                </div>
             `;
         }
 
         function checkAnswer(selectedIndex) {
             const options = document.querySelectorAll('.quiz-option');
-            const correctIndex = quizData[0].correct;
+            const correctIndex = quizData[currentQuestionIndex].correct;
+            
+            // Disable all options after selection
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
             
             options.forEach((option, index) => {
                 if (index === correctIndex) {
@@ -852,8 +1024,45 @@
             });
 
             if (selectedIndex === correctIndex) {
+                quizScore++;
                 showAchievement('🧠 Quiz Master!', 'You answered correctly!');
             }
+
+            // Show next question after 2 seconds
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuiz();
+                } else {
+                    showQuizResults();
+                }
+            }, 2000);
+        }
+
+        function showQuizResults() {
+            const quizContent = document.getElementById('quizContent');
+            const percentage = Math.round((quizScore / quizData.length) * 100);
+            
+            quizContent.innerHTML = `
+                <div class="quiz-question">🎉 Quiz Complete!</div>
+                <div style="font-size: 2rem; margin: 2rem 0; color: var(--gold);">
+                    Your Score: ${quizScore}/${quizData.length} (${percentage}%)
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    ${percentage >= 80 ? '🏆 Excellent! You know Pakistan well!' : 
+                      percentage >= 60 ? '👍 Good job! Keep learning about Pakistan!' : 
+                      '📚 Keep studying Pakistan\'s history and culture!'}
+                </div>
+                <button class="music-btn" onclick="resetQuiz()" style="margin: 0 1rem;">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+            `;
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            quizScore = 0;
+            loadQuiz();
         }
 
         // Photo Booth
@@ -919,41 +1128,103 @@
             link.click();
         }
 
-        // Music System
+        // Music System with Pakistani National Anthem and Patriotic Songs
+        const patrioticSongs = {
+            anthem: {
+                name: "Qaumi Tarana (National Anthem)",
+                notes: [
+                    { freq: 523.25, duration: 0.8 }, // C
+                    { freq: 659.25, duration: 0.8 }, // E
+                    { freq: 783.99, duration: 1.2 }, // G
+                    { freq: 659.25, duration: 0.8 }, // E
+                    { freq: 523.25, duration: 0.8 }, // C
+                    { freq: 440.00, duration: 1.2 }, // A
+                    { freq: 523.25, duration: 0.8 }, // C
+                    { freq: 659.25, duration: 0.8 }, // E
+                    { freq: 783.99, duration: 1.2 }, // G
+                    { freq: 880.00, duration: 1.6 }, // A
+                    { freq: 783.99, duration: 0.8 }, // G
+                    { freq: 659.25, duration: 0.8 }, // E
+                    { freq: 523.25, duration: 1.6 }  // C
+                ]
+            },
+            patriotic1: {
+                name: "Dil Dil Pakistan",
+                notes: [
+                    { freq: 523.25, duration: 0.6 }, // C
+                    { freq: 659.25, duration: 0.6 }, // E
+                    { freq: 783.99, duration: 0.6 }, // G
+                    { freq: 880.00, duration: 1.2 }, // A
+                    { freq: 783.99, duration: 0.6 }, // G
+                    { freq: 659.25, duration: 0.6 }, // E
+                    { freq: 523.25, duration: 1.2 }, // C
+                    { freq: 440.00, duration: 0.6 }, // A
+                    { freq: 523.25, duration: 0.6 }, // C
+                    { freq: 659.25, duration: 1.2 }  // E
+                ]
+            },
+            patriotic2: {
+                name: "Jeevay Jeevay Pakistan",
+                notes: [
+                    { freq: 659.25, duration: 0.5 }, // E
+                    { freq: 783.99, duration: 0.5 }, // G
+                    { freq: 880.00, duration: 0.5 }, // A
+                    { freq: 987.77, duration: 1.0 }, // B
+                    { freq: 880.00, duration: 0.5 }, // A
+                    { freq: 783.99, duration: 0.5 }, // G
+                    { freq: 659.25, duration: 1.0 }, // E
+                    { freq: 523.25, duration: 0.5 }, // C
+                    { freq: 659.25, duration: 0.5 }, // E
+                    { freq: 783.99, duration: 1.0 }  // G
+                ]
+            },
+            patriotic3: {
+                name: "Pakistan Zindabad",
+                notes: [
+                    { freq: 440.00, duration: 0.7 }, // A
+                    { freq: 523.25, duration: 0.7 }, // C
+                    { freq: 659.25, duration: 0.7 }, // E
+                    { freq: 783.99, duration: 1.4 }, // G
+                    { freq: 659.25, duration: 0.7 }, // E
+                    { freq: 523.25, duration: 0.7 }, // C
+                    { freq: 440.00, duration: 1.4 }, // A
+                    { freq: 392.00, duration: 0.7 }, // G
+                    { freq: 440.00, duration: 0.7 }, // A
+                    { freq: 523.25, duration: 1.4 }  // C
+                ]
+            }
+        };
+
         function playMusic(type) {
             if (currentAudio) {
                 currentAudio.pause();
             }
             
-            // Create simple audio for demo
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
+            const song = patrioticSongs[type];
             
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
+            if (!song) return;
             
-            if (type === 'anthem') {
-                // Simple melody for national anthem
-                const frequencies = [440, 523.25, 659.25, 783.99, 659.25, 523.25, 440];
-                frequencies.forEach((freq, index) => {
-                    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + index * 0.5);
-                });
-            } else {
-                // Patriotic song melody
-                const frequencies = [523.25, 659.25, 783.99, 659.25, 523.25, 440];
-                frequencies.forEach((freq, index) => {
-                    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + index * 0.3);
-                });
-            }
+            let currentTime = audioContext.currentTime;
             
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 3);
+            song.notes.forEach((note, index) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(note.freq, currentTime);
+                gainNode.gain.setValueAtTime(0.1, currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, currentTime + note.duration);
+                
+                oscillator.start(currentTime);
+                oscillator.stop(currentTime + note.duration);
+                
+                currentTime += note.duration;
+            });
             
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 3);
-            
-            showAchievement('🎵 Music Lover!', 'You played patriotic music!');
+            showAchievement('🎵 Music Lover!', `You played ${song.name}!`);
         }
 
         function toggleMute() {
@@ -986,6 +1257,16 @@
             setTimeout(() => {
                 achievement.remove();
             }, 5000);
+        }
+
+        function showAchievements() {
+            alert('🏆 Achievements System\n\n' +
+                  '• First Visit: Welcome to Pakistan Independence Day!\n' +
+                  '• Quiz Master: Answer quiz questions correctly\n' +
+                  '• Photo Taken: Capture patriotic photos\n' +
+                  '• Music Lover: Play patriotic music\n' +
+                  '• Independence Day: Witness Pakistan Independence Day\n\n' +
+                  'Keep exploring to unlock more achievements!');
         }
 
         // Close modals when clicking outside

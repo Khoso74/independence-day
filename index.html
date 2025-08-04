@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pakistan Independence Day Countdown</title>
+    <title>🇵🇰 Pakistan Independence Day - Advanced Countdown</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-green: #006400;
+            --secondary-green: #32CD32;
+            --accent-green: #228B22;
+            --white: #ffffff;
+            --gold: #FFD700;
+            --dark-green: #004d00;
+            --shadow: 0 10px 30px rgba(0,0,0,0.2);
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,130 +25,412 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(45deg, #006400, #228B22, #32CD32, #90EE90);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-green), var(--secondary-green));
             background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
+            animation: gradientShift 15s ease infinite;
             min-height: 100vh;
             overflow-x: hidden;
+            color: var(--white);
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
+            0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .header {
-            color: white;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* Countdown Styles */
-        .countdown-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .countdown {
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
         }
 
-        .countdown-item {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 15px;
-            min-width: 120px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .main-container {
+            padding-top: 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255,255,255,0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 30px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 40px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.3); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* Enhanced Countdown */
+        .countdown-section {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: var(--shadow);
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .countdown-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .countdown-card:hover::before {
+            left: 100%;
+        }
+
+        .countdown-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .countdown-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #006400;
-            display: block;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
             font-family: 'Courier New', monospace;
+            margin-bottom: 0.5rem;
         }
 
         .countdown-label {
-            font-size: 1rem;
-            color: #333;
-            margin-top: 5px;
+            font-size: 1.1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            opacity: 0.8;
         }
 
-        /* Celebration Styles */
-        .celebration-container {
+        /* Feature Cards */
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-desc {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 1000;
+            min-width: 300px;
+        }
+
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .music-btn {
+            background: var(--primary-green);
+            border: none;
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            background: var(--accent-green);
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1000;
-            background: linear-gradient(45deg, #006400, #228B22, #32CD32);
-            background-size: 400% 400%;
-            animation: gradientShift 3s ease infinite;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
         }
 
-        .celebration-content {
-            position: relative;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .flag-container {
-            position: relative;
-            margin-bottom: 30px;
-        }
-
-        .pakistani-flag {
-            width: 300px;
-            height: 200px;
-            background: linear-gradient(to bottom, #006400 50%, #ffffff 50%);
-            border-radius: 10px;
-            position: relative;
-            animation: flagWave 3s ease-in-out infinite;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .flag-pole {
+        .modal-content {
             position: absolute;
-            left: -20px;
-            top: 0;
-            width: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            text-align: center;
+        }
+
+        .quiz-question {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: var(--gold);
+        }
+
+        .quiz-option.correct {
+            background: rgba(0,255,0,0.3);
+            border-color: #00ff00;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(255,0,0,0.3);
+            border-color: #ff0000;
+        }
+
+        /* Photo Booth */
+        .photo-booth {
+            text-align: center;
+        }
+
+        .camera-container {
+            margin-bottom: 2rem;
+        }
+
+        #video {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--primary-green);
+            border: none;
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--accent-green);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .countdown-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-section {
+                grid-template-columns: 1fr;
+            }
+
+            .music-player {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                min-width: auto;
+            }
+        }
+
+        /* 3D Flag Animation */
+        .flag-3d {
+            width: 200px;
+            height: 120px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: flagWave3D 4s ease-in-out infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes flagWave3D {
+            0%, 100% { transform: rotateY(0deg) rotateX(0deg); }
+            25% { transform: rotateY(15deg) rotateX(5deg); }
+            50% { transform: rotateY(0deg) rotateX(10deg); }
+            75% { transform: rotateY(-15deg) rotateX(5deg); }
+        }
+
+        .flag-face {
+            position: absolute;
+            width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, #8B4513, #A0522D);
-            border-radius: 5px;
+            border-radius: 10px;
+        }
+
+        .flag-green {
+            background: var(--primary-green);
+            transform: translateZ(1px);
+        }
+
+        .flag-white {
+            background: var(--white);
+            transform: translateZ(-1px);
         }
 
         .flag-star {
@@ -143,313 +438,259 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
-            background: #ffffff;
+            width: 40px;
+            height: 40px;
+            background: var(--white);
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         }
 
-        @keyframes flagWave {
-            0%, 100% { transform: rotateY(0deg); }
-            50% { transform: rotateY(15deg); }
-        }
-
-        .celebration-message {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 0 0 20px #32CD32;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #32CD32; }
-            to { text-shadow: 0 0 30px #32CD32, 0 0 40px #32CD32; }
-        }
-
-        .celebration-buttons {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #006400, #32CD32);
-            color: white;
-            box-shadow: 0 5px 15px rgba(0,100,0,0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,100,0,0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Fireworks Canvas */
-        #fireworks-canvas {
+        /* Achievement System */
+        .achievements {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
+            top: 100px;
+            right: 2rem;
+            z-index: 1000;
         }
 
-        /* Camera Modal */
-        .camera-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-        }
-
-        .camera-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #video {
-            width: 100%;
-            max-width: 500px;
+        .achievement {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
             border-radius: 15px;
-            margin-bottom: 20px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: slideIn 0.5s ease;
         }
 
-        #canvas {
-            display: none;
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        .camera-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        /* Quotes Ticker */
-        .quotes-ticker {
+        /* Loading Animation */
+        .loading {
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
-            background: rgba(0, 100, 0, 0.9);
-            color: white;
-            padding: 15px 0;
-            overflow: hidden;
-            z-index: 1001;
-        }
-
-        .ticker-content {
+            height: 100%;
+            background: var(--primary-green);
             display: flex;
-            animation: ticker 30s linear infinite;
-            white-space: nowrap;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
         }
 
-        .ticker-item {
-            margin-right: 50px;
-            font-style: italic;
-            font-size: 1.1rem;
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-top: 5px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* Audio Controls */
-        .audio-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1002;
-        }
-
-        .audio-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .countdown {
-                gap: 10px;
-            }
-
-            .countdown-item {
-                min-width: 80px;
-                padding: 15px;
-            }
-
-            .countdown-number {
-                font-size: 2rem;
-            }
-
-            .pakistani-flag {
-                width: 200px;
-                height: 133px;
-            }
-
-            .celebration-message {
-                font-size: 1.8rem;
-            }
-
-            .celebration-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 200px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .countdown-item {
-                min-width: 60px;
-                padding: 10px;
-            }
-
-            .countdown-number {
-                font-size: 1.5rem;
-            }
-
-            .countdown-label {
-                font-size: 0.8rem;
-            }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🇵🇰 Pakistan Independence Day</h1>
-            <p>Countdown to 14th August</p>
-        </div>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
 
-        <div class="countdown-container">
-            <div class="countdown" id="countdown">
-                <div class="countdown-item">
-                    <span class="countdown-number" id="days">00</span>
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="nav-logo">
+            <i class="fas fa-flag"></i> Pakistan Independence Day
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#countdown">Countdown</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#quiz">Quiz</a></li>
+            <li><a href="#photo">Photo Booth</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">🇵🇰 Pakistan Independence Day</h1>
+            <p class="hero-subtitle">Celebrating 77 Years of Freedom, Unity, Faith & Discipline</p>
+            
+            <!-- 3D Flag -->
+            <div class="flag-3d">
+                <div class="flag-face flag-green"></div>
+                <div class="flag-face flag-white"></div>
+                <div class="flag-star"></div>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="countdown-section" id="countdown">
+            <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">
+                <i class="fas fa-clock"></i> Countdown to Independence Day
+            </h2>
+            <div class="countdown-grid" id="countdownGrid">
+                <div class="countdown-card">
+                    <div class="countdown-number" id="days">00</div>
                     <div class="countdown-label">Days</div>
                 </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="hours">00</span>
+                <div class="countdown-card">
+                    <div class="countdown-number" id="hours">00</div>
                     <div class="countdown-label">Hours</div>
                 </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="minutes">00</span>
+                <div class="countdown-card">
+                    <div class="countdown-number" id="minutes">00</div>
                     <div class="countdown-label">Minutes</div>
                 </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="seconds">00</span>
+                <div class="countdown-card">
+                    <div class="countdown-number" id="seconds">00</div>
                     <div class="countdown-label">Seconds</div>
                 </div>
             </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="feature-card" onclick="openModal('music')">
+                <div class="feature-icon">🎵</div>
+                <div class="feature-title">Patriotic Music</div>
+                <div class="feature-desc">Listen to national anthem and patriotic songs</div>
+            </div>
+            
+            <div class="feature-card" onclick="openModal('quiz')">
+                <div class="feature-icon">🧠</div>
+                <div class="feature-title">Pakistan Quiz</div>
+                <div class="feature-desc">Test your knowledge about Pakistan</div>
+            </div>
+            
+            <div class="feature-card" onclick="openModal('photo')">
+                <div class="feature-icon">📸</div>
+                <div class="feature-title">Photo Booth</div>
+                <div class="feature-desc">Take photos with patriotic filters</div>
+            </div>
+            
+            <div class="feature-card" onclick="openModal('achievements')">
+                <div class="feature-icon">🏆</div>
+                <div class="feature-title">Achievements</div>
+                <div class="feature-desc">Unlock achievements and badges</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player" id="musicPlayer">
+        <h3><i class="fas fa-music"></i> Patriotic Music</h3>
+        <div class="music-controls">
+            <button class="music-btn" onclick="playMusic('anthem')">
+                <i class="fas fa-play"></i> National Anthem
+            </button>
+            <button class="music-btn" onclick="playMusic('patriotic')">
+                <i class="fas fa-play"></i> Patriotic Songs
+            </button>
+            <button class="music-btn" onclick="toggleMute()">
+                <i class="fas fa-volume-mute" id="muteIcon"></i>
+            </button>
         </div>
     </div>
 
-    <!-- Celebration Container -->
-    <div class="celebration-container" id="celebrationContainer">
-        <canvas id="fireworks-canvas"></canvas>
-        
-        <div class="celebration-content">
-            <div class="flag-container">
-                <div class="pakistani-flag">
-                    <div class="flag-pole"></div>
-                    <div class="flag-star"></div>
+    <!-- Quiz Modal -->
+    <div class="modal" id="quizModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('quiz')">&times;</button>
+            <div class="quiz-container">
+                <h2><i class="fas fa-question-circle"></i> Pakistan Knowledge Quiz</h2>
+                <div id="quizContent">
+                    <!-- Quiz content will be loaded here -->
                 </div>
             </div>
-            
-            <div class="celebration-message">
-                Happy Independence Day Pakistan! 🇵🇰
-            </div>
-            
-            <div class="celebration-buttons">
-                <button class="btn btn-primary" id="celebrateBtn">🎉 Celebrate!</button>
-                <button class="btn btn-secondary" id="shareBtn">📸 Share Your Celebration</button>
-            </div>
-        </div>
-
-        <div class="audio-controls">
-            <button class="audio-btn" id="audioBtn">🔇 Mute</button>
         </div>
     </div>
 
-    <!-- Camera Modal -->
-    <div class="camera-modal" id="cameraModal">
-        <div class="camera-content">
-            <video id="video" autoplay></video>
-            <canvas id="canvas"></canvas>
-            <div class="camera-buttons">
-                <button class="btn btn-primary" id="captureBtn">📸 Take Photo</button>
-                <button class="btn btn-secondary" id="downloadBtn" style="display: none;">💾 Download</button>
-                <button class="btn btn-secondary" id="closeCameraBtn">❌ Close</button>
+    <!-- Photo Booth Modal -->
+    <div class="modal" id="photoModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('photo')">&times;</button>
+            <div class="photo-booth">
+                <h2><i class="fas fa-camera"></i> Patriotic Photo Booth</h2>
+                <div class="camera-container">
+                    <video id="video" autoplay></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+                <div class="filter-options">
+                    <button class="filter-btn" onclick="applyFilter('flag')">🇵🇰 Flag Overlay</button>
+                    <button class="filter-btn" onclick="applyFilter('green')">Green Theme</button>
+                    <button class="filter-btn" onclick="applyFilter('vintage')">Vintage</button>
+                    <button class="filter-btn" onclick="capturePhoto()">📸 Capture</button>
+                    <button class="filter-btn" onclick="downloadPhoto()">💾 Download</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Quotes Ticker -->
-    <div class="quotes-ticker" id="quotesTicker" style="display: none;">
-        <div class="ticker-content">
-            <div class="ticker-item">"Unity, Faith, Discipline" - Quaid-e-Azam Muhammad Ali Jinnah</div>
-            <div class="ticker-item">"Pakistan is not a piece of land, it is a living nation" - Allama Iqbal</div>
-            <div class="ticker-item">"With faith, discipline and selfless devotion to duty, there is nothing worthwhile that you cannot achieve" - Quaid-e-Azam</div>
-            <div class="ticker-item">"The future belongs to those who believe in the beauty of their dreams" - Allama Iqbal</div>
-            <div class="ticker-item">"Pakistan was created the day the first Indian national entered the field of Islam" - Quaid-e-Azam</div>
-            <div class="ticker-item">"The highest art is the art of living an honorable life" - Allama Iqbal</div>
-        </div>
+    <!-- Achievements Panel -->
+    <div class="achievements" id="achievementsPanel">
+        <!-- Achievements will be added here -->
     </div>
+
+    <!-- Fireworks Canvas -->
+    <canvas id="fireworksCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; display: none;"></canvas>
 
     <script>
-        // Countdown Timer
+        // Enhanced JavaScript with advanced features
+        let currentAudio = null;
+        let isMuted = false;
+        let achievements = [];
+        let quizData = [
+            {
+                question: "When did Pakistan gain independence?",
+                options: ["14 August 1947", "15 August 1947", "14 August 1948", "15 August 1948"],
+                correct: 0
+            },
+            {
+                question: "Who is known as the founder of Pakistan?",
+                options: ["Allama Iqbal", "Quaid-e-Azam", "Liaquat Ali Khan", "Sir Syed Ahmad Khan"],
+                correct: 1
+            },
+            {
+                question: "What is the national flower of Pakistan?",
+                options: ["Rose", "Jasmine", "Tulip", "Sunflower"],
+                correct: 1
+            },
+            {
+                question: "What is the capital of Pakistan?",
+                options: ["Karachi", "Lahore", "Islamabad", "Rawalpindi"],
+                correct: 2
+            },
+            {
+                question: "What is the national animal of Pakistan?",
+                options: ["Snow Leopard", "Markhor", "Lion", "Tiger"],
+                correct: 1
+            }
+        ];
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 2000);
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            initializeAchievements();
+        });
+
+        // Enhanced Countdown
         function updateCountdown() {
             const now = new Date();
             const currentYear = now.getFullYear();
-            const independenceDay = new Date(currentYear, 7, 14, 0, 0, 0); // August 14th, midnight
+            const independenceDay = new Date(currentYear, 7, 14, 0, 0, 0);
             
-            // If Independence Day has passed this year, set it to next year
             if (now > independenceDay) {
                 independenceDay.setFullYear(currentYear + 1);
             }
@@ -457,11 +698,7 @@
             const timeDifference = independenceDay - now;
             
             if (timeDifference <= 0) {
-                // Independence Day has arrived!
-                document.querySelector('.container').style.display = 'none';
-                document.getElementById('celebrationContainer').style.display = 'block';
-                document.getElementById('quotesTicker').style.display = 'block';
-                startFireworks();
+                startCelebration();
                 return;
             }
             
@@ -476,13 +713,20 @@
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
 
-        // Fireworks Animation
-        class Firework {
+        // Celebration Mode
+        function startCelebration() {
+            document.querySelector('.main-container').style.display = 'none';
+            document.getElementById('fireworksCanvas').style.display = 'block';
+            startFireworks();
+            showAchievement('🎉 Independence Day Achieved!', 'You witnessed Pakistan Independence Day!');
+        }
+
+        // Enhanced Fireworks
+        class EnhancedFireworks {
             constructor(canvas) {
                 this.canvas = canvas;
                 this.ctx = canvas.getContext('2d');
                 this.particles = [];
-                this.hue = 120; // Green color
                 this.resizeCanvas();
                 window.addEventListener('resize', () => this.resizeCanvas());
             }
@@ -492,18 +736,23 @@
                 this.canvas.height = window.innerHeight;
             }
 
-            createParticles(x, y) {
-                const particleCount = 30;
-                for (let i = 0; i < particleCount; i++) {
-                    this.particles.push({
-                        x: x,
-                        y: y,
-                        vx: (Math.random() - 0.5) * 8,
-                        vy: (Math.random() - 0.5) * 8,
-                        life: 1,
-                        decay: Math.random() * 0.02 + 0.02,
-                        color: `hsl(${this.hue + Math.random() * 30}, 100%, 50%)`
-                    });
+            createParticle(x, y, color) {
+                return {
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
+                    life: 1,
+                    decay: Math.random() * 0.02 + 0.02,
+                    color: color,
+                    size: Math.random() * 3 + 1
+                };
+            }
+
+            createFirework(x, y) {
+                const colors = ['#006400', '#32CD32', '#FFD700', '#ffffff'];
+                for (let i = 0; i < 30; i++) {
+                    this.particles.push(this.createParticle(x, y, colors[Math.floor(Math.random() * colors.length)]));
                 }
             }
 
@@ -512,7 +761,7 @@
                     const particle = this.particles[i];
                     particle.x += particle.vx;
                     particle.y += particle.vy;
-                    particle.vy += 0.1; // Gravity
+                    particle.vy += 0.1;
                     particle.life -= particle.decay;
 
                     if (particle.life <= 0) {
@@ -530,7 +779,7 @@
                     this.ctx.globalAlpha = particle.life;
                     this.ctx.fillStyle = particle.color;
                     this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
                     this.ctx.fill();
                     this.ctx.restore();
                 }
@@ -540,9 +789,8 @@
                 this.update();
                 this.draw();
 
-                // Randomly create new fireworks
-                if (Math.random() < 0.05) {
-                    this.createParticles(
+                if (Math.random() < 0.1) {
+                    this.createFirework(
                         Math.random() * this.canvas.width,
                         Math.random() * this.canvas.height * 0.5
                     );
@@ -554,40 +802,63 @@
 
         let fireworks;
         function startFireworks() {
-            const canvas = document.getElementById('fireworks-canvas');
-            fireworks = new Firework(canvas);
+            const canvas = document.getElementById('fireworksCanvas');
+            fireworks = new EnhancedFireworks(canvas);
             fireworks.animate();
         }
 
-        // Audio Management
-        let audio = null;
-        let isAudioPlaying = false;
-
-        function createAudio() {
-            // Create a simple beep sound as placeholder for national anthem
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-            oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime + 0.5);
-            oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 1);
-            oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 1.5);
-            
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 2);
-            
-            return oscillator;
+        // Modal Functions
+        function openModal(type) {
+            document.getElementById(type + 'Modal').style.display = 'block';
+            if (type === 'quiz') {
+                loadQuiz();
+            } else if (type === 'photo') {
+                startCamera();
+            }
         }
 
-        // Camera Functionality
+        function closeModal(type) {
+            document.getElementById(type + 'Modal').style.display = 'none';
+            if (type === 'photo') {
+                stopCamera();
+            }
+        }
+
+        // Quiz System
+        function loadQuiz() {
+            const quizContent = document.getElementById('quizContent');
+            const currentQuestion = quizData[0]; // For demo, always show first question
+            
+            quizContent.innerHTML = `
+                <div class="quiz-question">${currentQuestion.question}</div>
+                <div class="quiz-options">
+                    ${currentQuestion.options.map((option, index) => 
+                        `<div class="quiz-option" onclick="checkAnswer(${index})">${option}</div>`
+                    ).join('')}
+                </div>
+            `;
+        }
+
+        function checkAnswer(selectedIndex) {
+            const options = document.querySelectorAll('.quiz-option');
+            const correctIndex = quizData[0].correct;
+            
+            options.forEach((option, index) => {
+                if (index === correctIndex) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== correctIndex) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            if (selectedIndex === correctIndex) {
+                showAchievement('🧠 Quiz Master!', 'You answered correctly!');
+            }
+        }
+
+        // Photo Booth
         let stream = null;
+        let currentFilter = 'normal';
 
         async function startCamera() {
             try {
@@ -607,6 +878,20 @@
             }
         }
 
+        function applyFilter(filterType) {
+            currentFilter = filterType;
+            const video = document.getElementById('video');
+            video.style.filter = getFilterStyle(filterType);
+        }
+
+        function getFilterStyle(filterType) {
+            switch(filterType) {
+                case 'green': return 'hue-rotate(120deg) saturate(1.5)';
+                case 'vintage': return 'sepia(0.8) contrast(1.2)';
+                default: return 'none';
+            }
+        }
+
         function capturePhoto() {
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
@@ -615,71 +900,103 @@
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             
-            // Draw video frame
             ctx.drawImage(video, 0, 0);
             
-            // Add Pakistani flag overlay
-            const flagOverlay = new Image();
-            flagOverlay.src = 'data:image/svg+xml;base64,' + btoa(`
-                <svg width="100" height="60" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="100" height="30" fill="#006400"/>
-                    <rect y="30" width="100" height="30" fill="#ffffff"/>
-                    <polygon points="50,10 55,25 70,25 60,35 65,50 50,40 35,50 40,35 30,25 45,25" fill="#ffffff"/>
-                </svg>
-            `);
+            if (currentFilter === 'flag') {
+                // Add flag overlay
+                ctx.fillStyle = 'rgba(0, 100, 0, 0.3)';
+                ctx.fillRect(canvas.width - 100, 20, 80, 50);
+            }
             
-            flagOverlay.onload = function() {
-                ctx.globalAlpha = 0.7;
-                ctx.drawImage(flagOverlay, canvas.width - 120, 20, 100, 60);
-                ctx.globalAlpha = 1.0;
-                
-                // Show download button
-                document.getElementById('downloadBtn').style.display = 'inline-block';
-            };
+            showAchievement('📸 Photo Taken!', 'You captured a patriotic moment!');
         }
 
         function downloadPhoto() {
             const canvas = document.getElementById('canvas');
             const link = document.createElement('a');
-            link.download = 'pakistan-independence-day-celebration.png';
+            link.download = 'pakistan-independence-celebration.png';
             link.href = canvas.toDataURL();
             link.click();
         }
 
-        // Event Listeners
-        document.getElementById('celebrateBtn').addEventListener('click', function() {
-            if (!isAudioPlaying) {
-                createAudio();
-                isAudioPlaying = true;
-                document.getElementById('audioBtn').textContent = '🔊 Unmute';
+        // Music System
+        function playMusic(type) {
+            if (currentAudio) {
+                currentAudio.pause();
             }
-        });
-
-        document.getElementById('audioBtn').addEventListener('click', function() {
-            if (isAudioPlaying) {
-                this.textContent = '🔇 Mute';
-                isAudioPlaying = false;
+            
+            // Create simple audio for demo
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'anthem') {
+                // Simple melody for national anthem
+                const frequencies = [440, 523.25, 659.25, 783.99, 659.25, 523.25, 440];
+                frequencies.forEach((freq, index) => {
+                    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + index * 0.5);
+                });
             } else {
-                this.textContent = '🔊 Unmute';
-                isAudioPlaying = true;
+                // Patriotic song melody
+                const frequencies = [523.25, 659.25, 783.99, 659.25, 523.25, 440];
+                frequencies.forEach((freq, index) => {
+                    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + index * 0.3);
+                });
             }
-        });
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 3);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 3);
+            
+            showAchievement('🎵 Music Lover!', 'You played patriotic music!');
+        }
 
-        document.getElementById('shareBtn').addEventListener('click', function() {
-            document.getElementById('cameraModal').style.display = 'block';
-            startCamera();
-        });
+        function toggleMute() {
+            isMuted = !isMuted;
+            const muteIcon = document.getElementById('muteIcon');
+            muteIcon.className = isMuted ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+        }
 
-        document.getElementById('captureBtn').addEventListener('click', capturePhoto);
-        document.getElementById('downloadBtn').addEventListener('click', downloadPhoto);
-        document.getElementById('closeCameraBtn').addEventListener('click', function() {
-            document.getElementById('cameraModal').style.display = 'none';
-            stopCamera();
-        });
+        // Achievement System
+        function initializeAchievements() {
+            achievements = [
+                { id: 'first_visit', title: 'First Visit', description: 'Welcome to Pakistan Independence Day!', unlocked: false },
+                { id: 'quiz_master', title: 'Quiz Master', description: 'Answer a quiz question correctly', unlocked: false },
+                { id: 'photo_taken', title: 'Photographer', description: 'Take a photo in the photo booth', unlocked: false },
+                { id: 'music_played', title: 'Music Lover', description: 'Play patriotic music', unlocked: false },
+                { id: 'independence_day', title: 'Independence Day', description: 'Witness Pakistan Independence Day', unlocked: false }
+            ];
+        }
 
-        // Initialize
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+        function showAchievement(title, description) {
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement';
+            achievement.innerHTML = `
+                <h4>🏆 ${title}</h4>
+                <p>${description}</p>
+            `;
+            
+            document.getElementById('achievementsPanel').appendChild(achievement);
+            
+            setTimeout(() => {
+                achievement.remove();
+            }, 5000);
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html> 
